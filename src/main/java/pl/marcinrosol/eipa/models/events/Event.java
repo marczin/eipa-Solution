@@ -1,15 +1,17 @@
 package pl.marcinrosol.eipa.models.events;
 
+import java.sql.Timestamp;
+
 public abstract class Event {
 
-    protected String id;
-    protected String ts;
-    protected EventType type;
+    private String id;
+    private Timestamp ts;
+    private EventType type;
 
-    public Event() {
+    protected Event() {
     }
 
-    public Event(String id, String ts, EventType eventType) {
+    protected Event(String id, Timestamp ts, EventType eventType) {
         this.id = id;
         this.ts = ts;
         this.type = eventType;
@@ -23,11 +25,11 @@ public abstract class Event {
         this.id = id;
     }
 
-    public String getTs() {
+    public Timestamp getTs() {
         return ts;
     }
 
-    public void setTs(String ts) {
+    public void setTs(Timestamp ts) {
         this.ts = ts;
     }
 

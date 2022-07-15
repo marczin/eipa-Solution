@@ -1,0 +1,10 @@
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5439/postgres"
+    username: postgres
+    password: postgres
+  liquibase:
+    change-log: "classpath:db/changelog/migrations.xml"
+
+api_key: "imNotApiKey"

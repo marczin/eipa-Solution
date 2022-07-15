@@ -1,15 +1,18 @@
 package pl.marcinrosol.eipa.models.dao;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class StatusDao {
     // status":{"availability":1,"status":1,"ts":"2022-07-14T23:30:38+02:00"
     private Long availability;
     private Long status;
-    private String ts;
+    private Timestamp ts;
 
     public StatusDao() {
     }
 
-    public StatusDao(Long availability, Long status, String ts) {
+    public StatusDao(Long availability, Long status, Timestamp ts) {
         this.availability = availability;
         this.status = status;
         this.ts = ts;
@@ -31,11 +34,11 @@ public class StatusDao {
         this.status = status;
     }
 
-    public String getTs() {
+    public Timestamp getTs() {
         return ts;
     }
 
-    public void setTs(String ts) {
+    public void setTs(Timestamp ts) {
         this.ts = ts;
     }
 }
