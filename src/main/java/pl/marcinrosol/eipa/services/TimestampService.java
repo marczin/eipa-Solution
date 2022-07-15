@@ -5,7 +5,7 @@ import pl.marcinrosol.eipa.models.dao.DynamicDataDao;
 import java.sql.Timestamp;
 import java.util.Collection;
 
-public interface DatesService {
+public interface TimestampService {
 
     Timestamp getLatestTimestamp();
 

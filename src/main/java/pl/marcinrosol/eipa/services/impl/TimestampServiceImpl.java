@@ -3,7 +3,7 @@ package pl.marcinrosol.eipa.services.impl;
 import org.springframework.stereotype.Service;
 import pl.marcinrosol.eipa.models.dao.DynamicDataDao;
 import pl.marcinrosol.eipa.repositories.DatesRepo;
-import pl.marcinrosol.eipa.services.DatesService;
+import pl.marcinrosol.eipa.services.TimestampService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
-public class DatesServiceImpl implements DatesService {
+public class TimestampServiceImpl implements TimestampService {
 
     private final DatesRepo datesRepo;
 
@@ -23,7 +23,7 @@ public class DatesServiceImpl implements DatesService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public DatesServiceImpl(DatesRepo datesRepo) {
+    public TimestampServiceImpl(DatesRepo datesRepo) {
         this.datesRepo = datesRepo;
     }
 

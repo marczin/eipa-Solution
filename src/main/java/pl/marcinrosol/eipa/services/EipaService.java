@@ -13,4 +13,6 @@ public interface EipaService {
     Optional<EipaRequestResult> fetchDynamicData();
 
     List<DynamicDataDao> filterNewestData(Collection<DynamicDataDao> dataList, Timestamp timestamp);
+
+    void saveEipaData(Collection<DynamicDataDao> collection);
 }
