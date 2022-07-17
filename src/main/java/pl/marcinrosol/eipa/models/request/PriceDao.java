@@ -1,14 +1,15 @@
 package pl.marcinrosol.eipa.models.request;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class PriceDao {
 
     private BigDecimal price;
     private String unit;
-    private String ts;
+    private Timestamp ts;
 
-    public PriceDao(BigDecimal price, String unit, String ts) {
+    public PriceDao(BigDecimal price, String unit, Timestamp ts) {
         this.price = price;
         this.unit = unit;
         this.ts = ts;
@@ -33,14 +34,12 @@ public class PriceDao {
         this.unit = unit;
     }
 
-    public String getTs() {
+    public Timestamp getTs() {
         return ts;
     }
 
-    public void setTs(String ts) {
+    public void setTs(Timestamp ts) {
         this.ts = ts;
     }
-
-    // {"price":"1.21","unit":"kWh","ts":"2022-07-15T12:00:48+02:00"}
 
 }

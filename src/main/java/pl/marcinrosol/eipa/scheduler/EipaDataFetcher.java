@@ -46,7 +46,7 @@ public class EipaDataFetcher {
     private EipaRequestResult fetchEipaData() {
         var result = eipaService.fetchDynamicData();
         var timestamp = datesService.getHighestCollectionTimestamp(result.getData());
-        datesService.insertNewTimestamp(timestamp);
+        timestamp.ifPresent(datesService::insertNewTimestamp);
         return result;
     }
 

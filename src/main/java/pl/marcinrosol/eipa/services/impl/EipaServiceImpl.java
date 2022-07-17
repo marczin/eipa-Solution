@@ -38,8 +38,8 @@ public class EipaServiceImpl implements EipaService {
 
     private List<DynamicDataDao> filterNonNulls(Collection<DynamicDataDao> dynamicData) {
         return dynamicData.stream()
-                .filter(data -> data.getStatus() != null)
-                .filter(data -> data.getStatus().getTs() != null).collect(Collectors.toList());
+                .filter(data -> data.getStatus() != null && data.getStatus().getTs() != null)
+                .collect(Collectors.toList());
     }
 
 }

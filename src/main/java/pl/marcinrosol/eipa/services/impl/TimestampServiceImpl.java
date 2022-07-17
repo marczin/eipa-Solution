@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,13 +42,14 @@ public class TimestampServiceImpl implements TimestampService {
     }
 
     @Override
-    public Timestamp getHighestCollectionTimestamp(Collection<DynamicDataDao> dataList) {
+    public Optional<Timestamp> getHighestCollectionTimestamp(Collection<DynamicDataDao> dataList) {
+        Optional<Timestamp> result = Optional.empty();
         Comparator<DynamicDataDao> timestampComparator = (v1, v2) -> v1.getStatus().getTs().before(v2.getStatus().getTs()) ? 1 : -1;
-        var sortedData = dataList.stream()
-                .filter(data -> data.getStatus() != null)
-                .filter(data -> data.getStatus().getTs() != null)
+        var filteredData = dataList.stream()
+                .filter(data -> data.getStatus() != null && data.getStatus().getTs() != null)
                 .sorted(timestampComparator)
-                .collect(Collectors.toList());
-        return sortedData.stream().findFirst().get().getStatus().getTs();
+                .findFirst();
+        if (filteredData.isPresent()) result = Optional.of(filteredData.get().getStatus().getTs());
+        return result;
     }
 }

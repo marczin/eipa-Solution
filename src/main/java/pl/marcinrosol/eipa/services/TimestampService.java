@@ -4,6 +4,7 @@ import pl.marcinrosol.eipa.models.request.DynamicDataDao;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface TimestampService {
 
@@ -11,6 +12,6 @@ public interface TimestampService {
 
     void insertNewTimestamp(Timestamp timestamp);
 
-    Timestamp getHighestCollectionTimestamp(Collection<DynamicDataDao> dataList);
+    Optional<Timestamp> getHighestCollectionTimestamp(Collection<DynamicDataDao> dataList);
 
 }

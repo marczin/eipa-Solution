@@ -38,18 +38,26 @@ public class EventServiceImpl implements EventService {
         return DynamicData.builder()
                 .status(prepareStatus(data.getStatus()))
                 .pointId(data.getCode())
-                .originalTs(data.getStatus().getTs())
+                .originalTs(prepareTimestamp(data))
                 .build();
+    }
+
+    private Timestamp prepareTimestamp(DynamicDataDao data) {
+        return data.getStatus() != null ? data.getStatus().getTs() : null;
     }
 
     private Status prepareStatus(StatusDao statusDao) {
         Status result = Status.UNKNOWN;
-        if (statusDao.getAvailability() == 0) {
-            result = Status.OUT_OF_ORDER;
-        } else if (statusDao.getStatus() == 1) {
-            result = Status.AVAILABLE;
-        } else if (statusDao.getStatus() == 0) {
-            result = Status.OCCUPIED;
+        if (statusDao != null) {
+            if (statusDao.getAvailability() == 0) {
+                result = Status.OUT_OF_ORDER;
+            } else {
+                if (statusDao.getStatus() == 1) {
+                    result = Status.AVAILABLE;
+                } else if (statusDao.getStatus() == 0) {
+                    result = Status.OCCUPIED;
+                }
+            }
         }
         return result;
     }
