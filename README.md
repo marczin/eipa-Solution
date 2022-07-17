@@ -1,8 +1,6 @@
 # eipa-Solution
 Solution for fetching EIPA data.
 
-Project is developed on `project` branch.
-
 The approach for this project is to fetch all data from `eipa.udt.gov.pl` and proccess it into events.
 
 In this approach I assumed that for the consumer newset data are more important.
