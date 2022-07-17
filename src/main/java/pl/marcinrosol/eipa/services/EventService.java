@@ -1,13 +1,15 @@
 package pl.marcinrosol.eipa.services;
 
-import pl.marcinrosol.eipa.models.dao.DynamicDataDao;
-import pl.marcinrosol.eipa.models.events.EipaEvent;
-import pl.marcinrosol.eipa.models.events.EventType;
+import org.springframework.http.HttpStatus;
+import pl.marcinrosol.eipa.models.request.DynamicDataDao;
+import pl.marcinrosol.eipa.models.response.EventDataResponse;
+import pl.marcinrosol.eipa.models.event.EventType;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface EventService {
 
-    List<EipaEvent> prepareEventData(Collection<DynamicDataDao> dataCollection, EventType eventType);
+    EventDataResponse prepareEventData(Collection<DynamicDataDao> dataCollection, EventType eventType);
+
+    HttpStatus parseEventData(EventDataResponse body);
 }

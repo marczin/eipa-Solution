@@ -13,21 +13,4 @@
             </column>
         </createTable>
     </changeSet>
-
-    <changeSet id="2" author="marcin">
-        <createTable tableName="eipa_data">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="data" type="jsonb">
-                <constraints nullable="false"/>
-            </column>
-            <column name="save_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="consumed_date" type="date">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
-    </changeSet>
 </databaseChangeLog>

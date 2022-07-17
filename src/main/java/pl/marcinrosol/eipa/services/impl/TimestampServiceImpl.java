@@ -1,7 +1,7 @@
 package pl.marcinrosol.eipa.services.impl;
 
 import org.springframework.stereotype.Service;
-import pl.marcinrosol.eipa.models.dao.DynamicDataDao;
+import pl.marcinrosol.eipa.models.request.DynamicDataDao;
 import pl.marcinrosol.eipa.repositories.DatesRepo;
 import pl.marcinrosol.eipa.services.TimestampService;
 
@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +42,7 @@ public class TimestampServiceImpl implements TimestampService {
     }
 
     @Override
-    public Timestamp getHighestTimestamp(Collection<DynamicDataDao> dataList) {
+    public Timestamp getHighestCollectionTimestamp(Collection<DynamicDataDao> dataList) {
         Comparator<DynamicDataDao> timestampComparator = (v1, v2) -> v1.getStatus().getTs().before(v2.getStatus().getTs()) ? 1 : -1;
         var sortedData = dataList.stream()
                 .filter(data -> data.getStatus() != null)

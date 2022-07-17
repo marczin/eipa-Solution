@@ -1,4 +1,4 @@
-package pl.marcinrosol.eipa.models.dao;
+package pl.marcinrosol.eipa.models.request;
 
 import java.math.BigDecimal;
 

@@ -1,7 +1,4 @@
-package pl.marcinrosol.eipa.models.events;
-
-import lombok.Builder;
-import pl.marcinrosol.eipa.models.response.DynamicData;
+package pl.marcinrosol.eipa.models.event;
 
 import java.sql.Timestamp;
 

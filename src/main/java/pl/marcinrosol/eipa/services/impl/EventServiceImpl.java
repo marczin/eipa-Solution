@@ -1,30 +1,37 @@
 package pl.marcinrosol.eipa.services.impl;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import pl.marcinrosol.eipa.models.dao.DynamicDataDao;
-import pl.marcinrosol.eipa.models.dao.StatusDao;
-import pl.marcinrosol.eipa.models.events.EipaEvent;
-import pl.marcinrosol.eipa.models.events.EventType;
-import pl.marcinrosol.eipa.models.response.DynamicData;
-import pl.marcinrosol.eipa.models.response.Status;
+import org.springframework.web.client.RestTemplate;
+import pl.marcinrosol.eipa.models.request.DynamicDataDao;
+import pl.marcinrosol.eipa.models.request.StatusDao;
+import pl.marcinrosol.eipa.models.event.EipaEvent;
+import pl.marcinrosol.eipa.models.response.EventDataResponse;
+import pl.marcinrosol.eipa.models.event.EventType;
+import pl.marcinrosol.eipa.models.event.DynamicData;
+import pl.marcinrosol.eipa.models.event.Status;
 import pl.marcinrosol.eipa.services.EventService;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
 
+    @Value("event.response.post.url")
+    private String POST_URL;
+
     @Override
-    public List<EipaEvent> prepareEventData(Collection<DynamicDataDao> dataCollection, EventType eventType) {
-         return dataCollection.stream()
+    public EventDataResponse prepareEventData(Collection<DynamicDataDao> dataCollection, EventType eventType) {
+        var eipaEvents =  dataCollection.stream()
                 .map(this::buildDynamicData)
                  .map(dynamicData -> prepareEvent(eventType, dynamicData) )
                 .collect(Collectors.toList());
+        return new EventDataResponse(eipaEvents);
     }
 
     private DynamicData buildDynamicData(DynamicDataDao data) {
@@ -41,7 +48,7 @@ public class EventServiceImpl implements EventService {
             result = Status.OUT_OF_ORDER;
         } else if (statusDao.getStatus() == 1) {
             result = Status.AVAILABLE;
-        } else if (statusDao.getStatus() == 0){
+        } else if (statusDao.getStatus() == 0) {
             result = Status.OCCUPIED;
         }
         return result;
@@ -52,6 +59,13 @@ public class EventServiceImpl implements EventService {
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         return new EipaEvent(uuid, timestamp, eventType, data);
+    }
+
+    @Override
+    public HttpStatus parseEventData(EventDataResponse body) {
+        RestTemplate restTemplate = new RestTemplate();
+        var result = restTemplate.postForEntity(POST_URL, body, EventDataResponse.class );
+        return result.getStatusCode();
     }
 
 }

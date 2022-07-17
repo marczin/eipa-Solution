@@ -1,4 +1,4 @@
-package pl.marcinrosol.eipa.models.events;
+package pl.marcinrosol.eipa.models.event;
 
 import java.sql.Timestamp;
 

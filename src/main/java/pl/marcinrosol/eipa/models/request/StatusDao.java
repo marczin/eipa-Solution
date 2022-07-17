@@ -1,7 +1,6 @@
-package pl.marcinrosol.eipa.models.dao;
+package pl.marcinrosol.eipa.models.request;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class StatusDao {
     // status":{"availability":1,"status":1,"ts":"2022-07-14T23:30:38+02:00"

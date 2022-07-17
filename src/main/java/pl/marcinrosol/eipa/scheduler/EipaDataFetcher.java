@@ -5,10 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import pl.marcinrosol.eipa.models.dao.EipaRequestResult;
+import pl.marcinrosol.eipa.models.event.EventType;
+import pl.marcinrosol.eipa.models.request.DynamicDataDao;
+import pl.marcinrosol.eipa.models.request.EipaRequestResult;
 import pl.marcinrosol.eipa.services.TimestampService;
 import pl.marcinrosol.eipa.services.EipaService;
 import pl.marcinrosol.eipa.services.EventService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @EnableScheduling
 @Configuration
@@ -24,27 +29,28 @@ public class EipaDataFetcher {
         this.eventService = eventService;
     }
 
-    @Scheduled(cron = "1 * * * * *", zone = "Europe/Warsaw")
-    public void eipaDataFetcher() {
-        // fetch data every minute
-        var latestTimestamp = datesService.getLatestTimestamp();
-        var result = fetchEipaData();
-        var newestData = eipaService.filterNewestData(result.getData(), latestTimestamp);
-        eipaService.saveEipaData(newestData);
-    }
-
-
     @EventListener(ApplicationReadyEvent.class)
     public void fetchDataAfterAppStart() {
-        fetchEipaData();
+        prepareAndSendData();
+    }
+
+    @Scheduled(cron = "*/1 * * * *", zone = "Europe/Warsaw")
+    public void eipaDataFetcher() {
+        prepareAndSendData();
+    }
+
+    private void prepareAndSendData() {
+        var latestTimestamp = datesService.getLatestTimestamp();
+        var result = fetchEipaData();
+        var filteredData = eipaService.filterNewestData(result.getData(), latestTimestamp);
+        var body = eventService.prepareEventData(filteredData, EventType.STATUS_UPDATE);
+        eventService.parseEventData(body);
     }
 
     private EipaRequestResult fetchEipaData() {
         var result = eipaService.fetchDynamicData();
-        result.ifPresent(data -> {
-            var timestamp = datesService.getHighestTimestamp(data.getData());
-            datesService.insertNewTimestamp(timestamp);
-        });
-        return result.get();
+        var timestamp = datesService.getHighestCollectionTimestamp(result.getData());
+        datesService.insertNewTimestamp(timestamp);
+        return result;
     }
 }

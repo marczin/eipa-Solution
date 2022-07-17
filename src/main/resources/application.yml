@@ -8,3 +8,8 @@ spring:
     change-log: "classpath:db/changelog/migrations.xml"
 
 api_key: "imNotApiKey"
+
+event:
+  response:
+    post:
+      url: "localhost:8081/api/event/consumer"

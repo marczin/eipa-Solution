@@ -1,4 +1,4 @@
-package pl.marcinrosol.eipa.models.response;
+package pl.marcinrosol.eipa.models.event;
 
 import lombok.Builder;
 

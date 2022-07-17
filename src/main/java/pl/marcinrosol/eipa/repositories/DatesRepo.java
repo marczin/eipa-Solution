@@ -13,5 +13,4 @@ public interface DatesRepo extends JpaRepository<LatestDate, Long> {
     @Query("SELECT ld.time FROM  LatestDate ld ORDER BY ld.time DESC")
     Timestamp getLatestTimestamp();
 
-
 }
