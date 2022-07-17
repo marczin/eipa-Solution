@@ -10,8 +10,6 @@ import pl.marcinrosol.eipa.services.EipaService;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static pl.marcinrosol.eipa.services.RequestsUrls.DYNAMIC_DATA_URL;
@@ -32,7 +30,7 @@ public class EipaServiceImpl implements EipaService {
     @Override
     public List<DynamicDataDao> filterNewestData(Collection<DynamicDataDao> dataList, Timestamp timestamp) {
         var result = filterNonNulls(dataList);
-        if (timestamp == null) {
+        if (timestamp != null) {
             return result.stream().filter(data -> data.getStatus().getTs().after(timestamp)).collect(Collectors.toList());
         }
         return result;

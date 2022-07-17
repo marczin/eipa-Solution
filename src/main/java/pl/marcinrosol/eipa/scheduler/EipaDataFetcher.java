@@ -1,5 +1,6 @@
 package pl.marcinrosol.eipa.scheduler;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -29,12 +30,7 @@ public class EipaDataFetcher {
         this.eventService = eventService;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void fetchDataAfterAppStart() {
-        prepareAndSendData();
-    }
-
-    @Scheduled(cron = "*/1 * * * *", zone = "Europe/Warsaw")
+    @Scheduled(cron = "${event.crone.time}", zone = "${event.crone.zone}")
     public void eipaDataFetcher() {
         prepareAndSendData();
     }
@@ -53,4 +49,5 @@ public class EipaDataFetcher {
         datesService.insertNewTimestamp(timestamp);
         return result;
     }
+
 }

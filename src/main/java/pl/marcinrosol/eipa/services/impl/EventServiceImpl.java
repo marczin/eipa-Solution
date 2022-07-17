@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.marcinrosol.eipa.models.event.DynamicData;
+import pl.marcinrosol.eipa.models.event.EipaEvent;
+import pl.marcinrosol.eipa.models.event.EventType;
+import pl.marcinrosol.eipa.models.event.Status;
 import pl.marcinrosol.eipa.models.request.DynamicDataDao;
 import pl.marcinrosol.eipa.models.request.StatusDao;
-import pl.marcinrosol.eipa.models.event.EipaEvent;
 import pl.marcinrosol.eipa.models.response.EventDataResponse;
-import pl.marcinrosol.eipa.models.event.EventType;
-import pl.marcinrosol.eipa.models.event.DynamicData;
-import pl.marcinrosol.eipa.models.event.Status;
 import pl.marcinrosol.eipa.services.EventService;
 
 import java.sql.Timestamp;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
 
-    @Value("event.response.post.url")
+    @Value("${event.response.post.url}")
     private String POST_URL;
 
     @Override

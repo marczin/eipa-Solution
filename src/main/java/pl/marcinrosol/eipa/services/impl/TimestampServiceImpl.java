@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,7 +18,7 @@ public class TimestampServiceImpl implements TimestampService {
 
     private final DatesRepo datesRepo;
 
-    private static String INSERT_TIMESTAMP = "insert into latest_dates (time) values (?);";
+    private static String INSERT_TIMESTAMP = "INSERT INTO latest_dates (time) VALUES (?);";
 
     @PersistenceContext
     private EntityManager entityManager;

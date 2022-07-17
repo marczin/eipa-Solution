@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Repository
 public interface DatesRepo extends JpaRepository<LatestDate, Long> {
 
-    @Query("SELECT ld.time FROM  LatestDate ld ORDER BY ld.time DESC")
+    @Query(value = "SELECT ld.time FROM latest_dates ld ORDER BY ld.time DESC LIMIT 1", nativeQuery = true)
     Timestamp getLatestTimestamp();
 
 }

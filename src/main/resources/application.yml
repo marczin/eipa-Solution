@@ -10,6 +10,10 @@ spring:
 api_key: "imNotApiKey"
 
 event:
+  crone:
+    time: "*/30 * * * * *"
+    zone: "Europe/Warsaw"
   response:
     post:
-      url: "localhost:8081/api/event/consumer"
+      url: "http://localhost:8080/api/eipa/event/consumer"
+
